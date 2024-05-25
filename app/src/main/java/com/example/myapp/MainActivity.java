@@ -1,7 +1,9 @@
 package com.example.myapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,6 +32,20 @@ public class MainActivity extends AppCompatActivity {
             Intent startIntent = new Intent(getApplicationContext(), SecondActivity.class);
             startIntent.putExtra("minePackage", "Hello World!");
             startActivity(startIntent);
+        });
+
+        Button googleBtn = findViewById(R.id.frstActivity);
+        googleBtn.setOnClickListener(v -> {
+            String searchQuery = "search query"; // Replace with your desired search query
+            Uri searchUri = Uri.parse("https://www.google.com/search?q=" + Uri.encode(searchQuery));
+
+            Intent searchIntent = new Intent(Intent.ACTION_VIEW, searchUri);
+
+            if (searchIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(searchIntent);
+            } else {
+                Log.e("MainActivity", "No Intent available to handle action");
+            }
         });
     }
 }
