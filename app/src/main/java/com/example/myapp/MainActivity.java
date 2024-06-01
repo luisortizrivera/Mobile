@@ -3,6 +3,7 @@ package com.example.myapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
@@ -29,6 +30,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL = "https://pokeapi.co/api/v2/";
     private ListView pokemonListView;
+    private Button reloadButton;
+    private int reloadOffset = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +44,24 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         pokemonListView = findViewById(R.id.pokemon_list_view);
+        reloadButton = findViewById(R.id.reload_random);
 
+        loadPokemon();
+
+        reloadButton.setOnClickListener(v -> {
+            reloadOffset += 8;
+            loadPokemon();
+        });
+    }
+
+    private void loadPokemon() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         PokeApiService pokeApiService = retrofit.create(PokeApiService.class);
-        Call<PokemonResponse> call = pokeApiService.getPokemonList(8);
+        Call<PokemonResponse> call = pokeApiService.getPokemonList(8, reloadOffset);
 
         call.enqueue(new Callback<PokemonResponse>() {
             @Override
