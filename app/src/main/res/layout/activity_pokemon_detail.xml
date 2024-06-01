@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wallpapermobile"
+    android:background="@drawable/blurred"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp">
@@ -18,26 +18,10 @@
         android:textSize="48sp"
         tools:text="tres" />
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
-
-        <ImageView
-            android:id="@+id/blurred_background"
-            android:layout_width="283dp"
-            android:layout_height="276dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/blurred"
-            android:alpha="0.7"
-            android:contentDescription="@string/blurred_background_image" />
-
-        <ImageView
-            android:id="@+id/pokemon_image"
-            android:layout_width="283dp"
-            android:layout_height="276dp"
-            android:contentDescription="@string/pokemon_image" />
-
-    </FrameLayout>
+    <ImageView
+        android:id="@+id/pokemon_image"
+        android:layout_width="283dp"
+        android:layout_height="276dp"
+        android:contentDescription="@string/pokemon_image" />
 
 </LinearLayout>
