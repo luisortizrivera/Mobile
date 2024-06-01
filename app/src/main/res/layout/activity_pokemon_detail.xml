@@ -29,13 +29,13 @@
             android:layout_height="276dp"
             android:scaleType="centerCrop"
             android:src="@drawable/blurred"
-            android:alpha="0.7" />
+            android:alpha="0.7"
+            android:contentDescription="@string/blurred_background_image" />
 
         <ImageView
             android:id="@+id/pokemon_image"
             android:layout_width="283dp"
             android:layout_height="276dp"
-            android:scaleType="center"
             android:contentDescription="@string/pokemon_image" />
 
     </FrameLayout>
