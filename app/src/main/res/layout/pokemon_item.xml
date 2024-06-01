@@ -10,6 +10,7 @@
     android:padding="8dp"
     android:radius="8dp"
     app:cardCornerRadius="16dp">
+
     <TextView
         android:id="@+id/pokemon_name"
         android:layout_width="match_parent"
@@ -17,9 +18,10 @@
         android:fontFamily="@font/fredoka_one"
         android:padding="16dp"
         android:textAlignment="center"
+        android:textColor="@android:color/black"
+
+
         android:textSize="24sp"
-
-
         tools:text="Pokemon Name" />
 
 </androidx.cardview.widget.CardView>
