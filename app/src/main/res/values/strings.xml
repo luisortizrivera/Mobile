@@ -3,4 +3,5 @@
     <string name="app_title">SimPok</string>
     <string name="pokemon_image">Pokemon Image</string>
     <string name="blurred_background_image">Blurred background image</string>
+    <string name="gifs_api_base_url">https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/</string>
 </resources>

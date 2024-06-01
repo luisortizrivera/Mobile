@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="#00BCD4"
+        android:backgroundTint="#2698E7"
         android:elevation="4dp"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"

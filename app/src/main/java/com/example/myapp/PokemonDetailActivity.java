@@ -27,12 +27,10 @@ public class PokemonDetailActivity extends AppCompatActivity {
 
         pokemonNameTextView.setText(pokemonName);
 
-        // Extract the Pokémon ID from the URL
         String[] urlParts = Objects.requireNonNull(pokemonUrl).split("/");
         String pokemonId = urlParts[urlParts.length - 1];
 
-        // Load the Pokémon image
-        String imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/" + pokemonId + ".gif";
+        String imageUrl = getString(R.string.gifs_api_base_url) + pokemonId + ".gif";
         Glide.with(this).load(imageUrl).into(pokemonImageView);
     }
 }
