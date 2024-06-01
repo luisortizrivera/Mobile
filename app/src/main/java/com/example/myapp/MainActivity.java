@@ -1,20 +1,36 @@
 package com.example.myapp;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.myapp.adapter.PokemonAdapter;
+import com.example.myapp.model.Pokemon;
+import com.example.myapp.network.PokeApiService;
+import com.example.myapp.network.PokemonResponse;
+
+import java.util.List;
+import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity extends AppCompatActivity {
+    private static final String BASE_URL = "https://pokeapi.co/api/v2/";
+    private ListView pokemonListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,25 +42,39 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        pokemonListView = findViewById(R.id.pokemon_list_view);
 
-        Button secondActivity = (Button) findViewById(R.id.scndActivity);
-        secondActivity.setOnClickListener(v -> {
-            Intent startIntent = new Intent(getApplicationContext(), SecondActivity.class);
-            startIntent.putExtra("minePackage", "Hello World!");
-            startActivity(startIntent);
-        });
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        Button googleBtn = findViewById(R.id.frstActivity);
-        googleBtn.setOnClickListener(v -> {
-            String searchQuery = "search query"; // Replace with your desired search query
-            Uri searchUri = Uri.parse("https://www.google.com/search?q=" + Uri.encode(searchQuery));
+        PokeApiService pokeApiService = retrofit.create(PokeApiService.class);
+        Call<PokemonResponse> call = pokeApiService.getPokemonList(8);
 
-            Intent searchIntent = new Intent(Intent.ACTION_VIEW, searchUri);
+        call.enqueue(new Callback<PokemonResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<PokemonResponse> call, @NonNull Response<PokemonResponse> response) {
+                if (response.isSuccessful()) {
+                    List<Pokemon> pokemonList = Objects.requireNonNull(response.body()).getResults();
+                    PokemonAdapter adapter = new PokemonAdapter(MainActivity.this, pokemonList);
+                    pokemonListView.setAdapter(adapter);
+                    pokemonListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Pokemon selectedPokemon = pokemonList.get(position);
+                            Intent intent = new Intent(MainActivity.this, PokemonDetailActivity.class);
+                            intent.putExtra("pokemon_name", selectedPokemon.getName());
+                            intent.putExtra("pokemon_url", selectedPokemon.getUrl());
+                            startActivity(intent);
+                        }
+                    });
+                }
+            }
 
-            if (searchIntent.resolveActivity(getPackageManager()) != null) {
-                startActivity(searchIntent);
-            } else {
-                Log.e("MainActivity", "No Intent available to handle action");
+            @Override
+            public void onFailure(@NonNull Call<PokemonResponse> call, @NonNull Throwable t) {
+                Log.e("MainActivity", "onFailure: ", t);
             }
         });
     }
