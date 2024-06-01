@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/pokemon_name"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:textSize="18sp" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    android:backgroundTint="#90EE90"
+    android:elevation="4dp"
+    android:padding="8dp"
+    android:radius="8dp"
+    app:cardCornerRadius="16dp">
+    <TextView
+        android:id="@+id/pokemon_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/fredoka_one"
+        android:padding="16dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+
+
+        tools:text="Pokemon Name" />
+
+</androidx.cardview.widget.CardView>

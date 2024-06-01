@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
+import java.util.Objects;
+
 public class PokemonDetailActivity extends AppCompatActivity {
     private ImageView pokemonImageView;
     private TextView pokemonNameTextView;
@@ -26,7 +28,7 @@ public class PokemonDetailActivity extends AppCompatActivity {
         pokemonNameTextView.setText(pokemonName);
 
         // Extract the Pokémon ID from the URL
-        String[] urlParts = pokemonUrl.split("/");
+        String[] urlParts = Objects.requireNonNull(pokemonUrl).split("/");
         String pokemonId = urlParts[urlParts.length - 1];
 
         // Load the Pokémon image

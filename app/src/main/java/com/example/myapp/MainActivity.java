@@ -3,8 +3,6 @@ package com.example.myapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
@@ -59,15 +57,12 @@ public class MainActivity extends AppCompatActivity {
                     List<Pokemon> pokemonList = Objects.requireNonNull(response.body()).getResults();
                     PokemonAdapter adapter = new PokemonAdapter(MainActivity.this, pokemonList);
                     pokemonListView.setAdapter(adapter);
-                    pokemonListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Pokemon selectedPokemon = pokemonList.get(position);
-                            Intent intent = new Intent(MainActivity.this, PokemonDetailActivity.class);
-                            intent.putExtra("pokemon_name", selectedPokemon.getName());
-                            intent.putExtra("pokemon_url", selectedPokemon.getUrl());
-                            startActivity(intent);
-                        }
+                    pokemonListView.setOnItemClickListener((parent, view, position, id) -> {
+                        Pokemon selectedPokemon = pokemonList.get(position);
+                        Intent intent = new Intent(MainActivity.this, PokemonDetailActivity.class);
+                        intent.putExtra("pokemon_name", selectedPokemon.getName());
+                        intent.putExtra("pokemon_url", selectedPokemon.getUrl());
+                        startActivity(intent);
                     });
                 }
             }
